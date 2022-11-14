@@ -11,11 +11,22 @@
 /* LAYOUT
 /*******************************************/
 img{
-  display: block;
+  display: inline-block;
   /* margin: 0 auto; */
   height: 250px;
+  padding: 5px;
 }
 
+#playerOneCard{
+  display: none;
+}
+
+#playerTwoCard{
+  display: none;
+}
+.extraCards{
+  display: none;
+}
 
 /******************************************
 /* ADDITIONAL STYLES

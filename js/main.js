@@ -1,6 +1,7 @@
 //creating the code for the rest of the card game
 
 document.querySelector('button').addEventListener('click', drawTwoCards)
+// document.querySelector('button').addEventListener('click', shuffleDeck)
 
 let scorePlayerOne = 0
 let scorePlayerTwo = 0
@@ -23,7 +24,6 @@ fetch('https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1 ')
         console.log(`error ${err}`)
     });
     
-
 function drawTwoCards(){
   fetch(`https://www.deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`)
       .then(res => res.json()) // parse response as JSON
@@ -44,13 +44,31 @@ function drawTwoCards(){
           document.querySelector('#winna').innerText = 'Player Two Winner'
           scorePlayerTwo += 1
           document.querySelector('#playerTwoWins').innerText = scorePlayerTwo
-        }else{
+        }else if(playerTwo === playerOne){ //This means War and 6 cards are discarded
           document.querySelector('#winna').innerText = 'We are going to War'
-          return data.remaining - 6
+
+          fetch(`https://www.deckofcardsapi.com/api/deck/${deckId}/draw/?count=6`)
+            .then(res => res.json()) // parse response as JSON
+            .then(data => {
+              console.log(data)
+            })
+            .catch(err => {
+                console.log(`error ${err}`)
+          });
 
         }
+        //used to reshuffle the deck
+        if(data.remaining === 0){
+          fetch(`https://www.deckofcardsapi.com/api/deck/${deckId}/shuffle/`)
+          .then(res => res.json()) // parse response as JSON
+          .then(data => {
+          })
+          .catch(err => {
+              console.log(`error ${err}`)
+          });
+        }
 
-
+        
       })
       .catch(err => {
           console.log(`error ${err}`)
@@ -73,3 +91,11 @@ function cardValues (value){
 }
 
 //this function is for going to war
+
+function war(){
+
+}
+
+//things to add
+//reshuffle
+//reshufle under 6 cards if war happens
